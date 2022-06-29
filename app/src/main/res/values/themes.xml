@@ -6,13 +6,4 @@
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
     </style>
-
-    <style name="Theme.MVVMSearchPicfieAsif.NoActionBar">
-        <item name="windowActionBar">false</item>
-        <item name="windowNoTitle">true</item>
-    </style>
-
-    <style name="Theme.MVVMSearchPicfieAsif.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
-
-    <style name="Theme.MVVMSearchPicfieAsif.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 </resources>
