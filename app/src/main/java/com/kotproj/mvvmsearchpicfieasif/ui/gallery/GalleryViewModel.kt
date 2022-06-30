@@ -1,14 +1,17 @@
 package com.kotproj.mvvmsearchpicfieasif.ui.gallery
 
-import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.switchMap
 import androidx.lifecycle.viewModelScope
 import androidx.paging.cachedIn
 import com.kotproj.mvvmsearchpicfieasif.data.GridImageFieRepository
+import dagger.hilt.android.lifecycle.HiltViewModel
+import javax.inject.Inject
 
-class GalleryViewModel @ViewModelInject constructor(
+@HiltViewModel
+
+class GalleryViewModel @Inject constructor(
     private val repository: GridImageFieRepository
 ) : ViewModel() {
 
