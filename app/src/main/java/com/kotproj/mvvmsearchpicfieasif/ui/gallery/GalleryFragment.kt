@@ -5,7 +5,6 @@ import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.kotproj.mvvmsearchpicfieasif.R
 import com.kotproj.mvvmsearchpicfieasif.databinding.FragmentGalleryBinding
 import dagger.hilt.android.AndroidEntryPoint
@@ -28,7 +27,10 @@ class GalleryFragment : Fragment(R.layout.fragment_gallery) {
         binding.apply {
             recyclerView.setHasFixedSize(true)
             recyclerView.layoutManager = GridLayoutManager(context, 2)
-            recyclerView.adapter = adapter
+            recyclerView.adapter = adapter.withLoadStateHeaderAndFooter(
+                header = GridImagePhotoLoadStateAdapter { adapter.retry() },
+                footer = GridImagePhotoLoadStateAdapter { adapter.retry() },
+            )
         }
 
         viewModel.photos.observe(viewLifecycleOwner) {
