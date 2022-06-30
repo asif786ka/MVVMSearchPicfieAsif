@@ -1,6 +1,6 @@
 package com.kotproj.mvvmsearchpicfieasif.di
 
-import com.kotproj.mvvmsearchpicfieasif.api.UnsplashApi
+import com.kotproj.mvvmsearchpicfieasif.api.GridImageFieApi
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -20,13 +20,13 @@ object AppModule {
     @Singleton
     fun provideRetrofit(): Retrofit =
         Retrofit.Builder()
-            .baseUrl(UnsplashApi.BASE_URL)
+            .baseUrl(GridImageFieApi.BASE_URL)
             .addConverterFactory(GsonConverterFactory.create())
             .build()
 
     @Provides
     @Singleton
-    fun provideUnsplashApi(retrofit: Retrofit): UnsplashApi =
-        retrofit.create(UnsplashApi::class.java)
+    fun provideUnsplashApi(retrofit: Retrofit): GridImageFieApi =
+        retrofit.create(GridImageFieApi::class.java)
 
 }
