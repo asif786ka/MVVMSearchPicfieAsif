@@ -4,6 +4,9 @@ import android.content.Intent
 import android.graphics.drawable.Drawable
 import android.net.Uri
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuInflater
+import android.view.MenuItem
 import android.view.View
 import android.widget.RadioGroup
 import androidx.appcompat.app.AppCompatDelegate
@@ -22,6 +25,8 @@ import com.kotproj.mvvmsearchpicfieasif.databinding.FragmentDetailsBinding
 class DetailsFragment : Fragment(R.layout.fragment_details) {
 
     private val args by navArgs<DetailsFragmentArgs>()
+
+    private var textDescription: String = ""
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -61,12 +66,12 @@ class DetailsFragment : Fragment(R.layout.fragment_details) {
                 .into(imageView)
 
             textViewDescription.text = photo.description
-
             val uri = Uri.parse(photo.user.attributionUrl)
             val intent = Intent(Intent.ACTION_VIEW, uri)
 
             textViewCreator.apply {
                 text = "Photo by ${photo.user.name} on Unsplash"
+                textDescription = text.toString()
                 setOnClickListener {
                     context.startActivity(intent)
                 }
@@ -90,6 +95,52 @@ class DetailsFragment : Fragment(R.layout.fragment_details) {
                 }
             })
         }
+
+        setHasOptionsMenu(true)
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        super.onCreateOptionsMenu(menu, inflater)
+
+        inflater.inflate(R.menu.menu_share, menu)
+
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when(item.itemId) {
+            R.id.shareButton -> shareContent()
+        }
+        return super.onOptionsItemSelected(item)
+    }
+
+    private fun shareContent() {
+        val sharingIntent = Intent(Intent.ACTION_SEND)
+
+        // type of the content to be shared
+
+        // type of the content to be shared
+        sharingIntent.type = "text/plain"
+
+        // Body of the content
+
+        // Body of the content
+        val shareBody = textDescription
+
+        // subject of the content. you can share anything
+
+        // subject of the content. you can share anything
+        val shareSubject = "MVVMGridImageFieContent"
+
+        // passing body of the content
+
+        // passing body of the content
+        sharingIntent.putExtra(Intent.EXTRA_TEXT, shareBody)
+
+        // passing subject of the content
+
+        // passing subject of the content
+        sharingIntent.putExtra(Intent.EXTRA_SUBJECT, shareSubject)
+        startActivity(Intent.createChooser(sharingIntent, "Share using"))
     }
 }
 
