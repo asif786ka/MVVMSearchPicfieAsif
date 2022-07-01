@@ -5,6 +5,8 @@ import android.graphics.drawable.Drawable
 import android.net.Uri
 import android.os.Bundle
 import android.view.View
+import android.widget.RadioGroup
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.navArgs
@@ -70,6 +72,23 @@ class DetailsFragment : Fragment(R.layout.fragment_details) {
                 }
                 paint.isUnderlineText = true
             }
+
+            // on below line we are setting on check change method for our radio group.
+            radioGroup.setOnCheckedChangeListener(RadioGroup.OnCheckedChangeListener { group, checkedId ->
+                // on radio button check change
+                when (checkedId) {
+                    R.id.idRBLight -> {
+                        selectedTheme.text = "Light Purple Theme Selected"
+                        // on below line we are changing the theme to light mode.
+                        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
+                    }
+                    R.id.idRBDark -> {
+                        selectedTheme.text = "Dark Green Theme Selected"
+                        // on below line we are changing the theme to dark mode.
+                        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
+                    }
+                }
+            })
         }
     }
 }
