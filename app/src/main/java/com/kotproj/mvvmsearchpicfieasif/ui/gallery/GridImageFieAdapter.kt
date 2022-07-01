@@ -12,7 +12,7 @@ import com.kotproj.mvvmsearchpicfieasif.data.GridImageFiePhoto
 import com.kotproj.mvvmsearchpicfieasif.databinding.ItemUnsplashPhotoBinding
 
 
-class GridImageFieAdapter :
+class GridImageFieAdapter(private val listener: OnItemClickListener):
     PagingDataAdapter<GridImageFiePhoto, GridImageFieAdapter.PhotoViewHolder>(PHOTO_COMPARATOR) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PhotoViewHolder {
@@ -30,8 +30,20 @@ class GridImageFieAdapter :
         }
     }
 
-    class PhotoViewHolder(private val binding: ItemUnsplashPhotoBinding) :
+   inner class PhotoViewHolder(private val binding: ItemUnsplashPhotoBinding) :
         RecyclerView.ViewHolder(binding.root) {
+
+       init {
+           binding.root.setOnClickListener {
+               val position = bindingAdapterPosition
+               if (position != RecyclerView.NO_POSITION) {
+                   val item = getItem(position)
+                   if (item != null) {
+                       listener.onItemClick(item)
+                   }
+               }
+           }
+       }
 
         fun bind(photo: GridImageFiePhoto) {
             binding.apply {
@@ -45,6 +57,10 @@ class GridImageFieAdapter :
                 textViewUserName.text = photo.user.username
             }
         }
+    }
+
+    interface OnItemClickListener {
+        fun onItemClick(photo: GridImageFiePhoto)
     }
 
     /*

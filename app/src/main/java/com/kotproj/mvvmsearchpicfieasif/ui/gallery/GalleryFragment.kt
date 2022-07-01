@@ -8,14 +8,16 @@ import androidx.appcompat.widget.SearchView
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import androidx.paging.LoadState
 import androidx.recyclerview.widget.GridLayoutManager
 import com.kotproj.mvvmsearchpicfieasif.R
+import com.kotproj.mvvmsearchpicfieasif.data.GridImageFiePhoto
 import com.kotproj.mvvmsearchpicfieasif.databinding.FragmentGalleryBinding
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class GalleryFragment : Fragment(R.layout.fragment_gallery) {
+class GalleryFragment : Fragment(R.layout.fragment_gallery), GridImageFieAdapter.OnItemClickListener {
 
     private val viewModel by viewModels<GalleryViewModel>()
 
@@ -27,7 +29,7 @@ class GalleryFragment : Fragment(R.layout.fragment_gallery) {
 
         _binding = FragmentGalleryBinding.bind(view)
 
-        val adapter = GridImageFieAdapter()
+        val adapter = GridImageFieAdapter(this)
 
         binding.apply {
             recyclerView.setHasFixedSize(true)
@@ -91,6 +93,11 @@ class GalleryFragment : Fragment(R.layout.fragment_gallery) {
                 return true
             }
         })
+    }
+
+    override fun onItemClick(photo: GridImageFiePhoto) {
+        val action = GalleryFragmentDirections.actionGalleryFragmentToDetailsFragment(photo)
+        findNavController().navigate(action)
     }
 
     //Avoid memory leak
